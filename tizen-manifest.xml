@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="4.0" package="org.example.basicuij" version="1.0.0">
+    <author email="jannes.engelbrecht2@gmail.com" href="https://secure.101dialer.com">J</author>
+    <description>island tech</description>
+    <profile name="wearable"/>
+    <ui-application appid="org.example.basicuij" exec="basicuij" launch_mode="caller" multiple="false" nodisplay="false" taskmanage="true" type="capp">
+        <label>basicuij</label>
+        <label xml:lang="en-za">Basic_J</label>
+        <icon>J.png</icon>
+        <metadata key="laptop_dev" value="true"/>
+        <splash-screens>
+            <splash-screen app-control-operation="" dpi="mdpi" indicator-display="true" orientation="landscape" src="basicuij.png" type="img"/>
+        </splash-screens>
+    </ui-application>
+    <privileges>
+        <privilege>http://tizen.org/privilege/mapservice</privilege>
+        <privilege>http://tizen.org/privilege/dpm.email</privilege>
+        <privilege>http://tizen.org/privilege/calendar.write</privilege>
+        <privilege>http://tizen.org/privilege/appdir.shareddata</privilege>
+        <privilege>http://tizen.org/privilege/call</privilege>
+        <privilege>http://tizen.org/privilege/healthinfo</privilege>
+        <privilege>http://tizen.org/privilege/window.priority.set</privilege>
+        <privilege>http://tizen.org/privilege/account.read</privilege>
+        <privilege>http://tizen.org/privilege/tee.client</privilege>
+        <privilege>http://tizen.org/privilege/datasharing</privilege>
+        <privilege>http://tizen.org/privilege/power</privilege>
+        <privilege>http://tizen.org/privilege/mediastorage</privilege>
+        <privilege>http://tizen.org/privilege/dpm.wipe</privilege>
+        <privilege>http://tizen.org/privilege/zigbee</privilege>
+        <privilege>http://tizen.org/privilege/bluetooth</privilege>
+        <privilege>http://tizen.org/privilege/message.read</privilege>
+        <privilege>http://tizen.org/privilege/antivirus.scan</privilege>
+        <privilege>http://tizen.org/privilege/network.profile</privilege>
+        <privilege>http://tizen.org/privilege/recorder</privilege>
+        <privilege>http://tizen.org/privilege/download</privilege>
+        <privilege>http://tizen.org/privilege/packagemanager.clearcache</privilege>
+        <privilege>http://tizen.org/privilege/antivirus.webprotect</privilege>
+        <privilege>http://tizen.org/privilege/alarm.get</privilege>
+        <privilege>http://tizen.org/privilege/fido.client</privilege>
+        <privilege>http://tizen.org/privilege/dpm.clipboard</privilege>
+        <privilege>http://tizen.org/privilege/dpm.password</privilege>
+        <privilege>http://tizen.org/privilege/ime</privilege>
+        <privilege>http://tizen.org/privilege/camera</privilege>
+        <privilege>http://tizen.org/privilege/widget.viewer</privilege>
+        <privilege>http://tizen.org/privilege/location.coarse</privilege>
+        <privilege>http://tizen.org/privilege/appmanager.launch</privilege>
+        <privilege>http://tizen.org/privilege/contact.write</privilege>
+        <privilege>http://tizen.org/privilege/push</privilege>
+        <privilege>http://tizen.org/privilege/message.write</privilege>
+        <privilege>http://tizen.org/privilege/internet</privilege>
+        <privilege>http://tizen.org/privilege/imemanager</privilege>
+        <privilege>http://tizen.org/privilege/dpm.browser</privilege>
+        <privilege>http://tizen.org/privilege/dpm.camera</privilege>
+        <privilege>http://tizen.org/privilege/dpm.storage</privilege>
+        <privilege>http://tizen.org/privilege/nfc.cardemulation</privilege>
+        <privilege>http://tizen.org/privilege/dpm.microphone</privilege>
+        <privilege>http://tizen.org/privilege/mediacontroller.client</privilege>
+        <privilege>http://tizen.org/privilege/dpm.bluetooth</privilege>
+        <privilege>http://tizen.org/privilege/contact.read</privilege>
+        <privilege>http://tizen.org/privilege/dpm.wifi</privilege>
+        <privilege>http://tizen.org/privilege/email</privilege>
+        <privilege>http://tizen.org/privilege/haptic</privilege>
+        <privilege>http://tizen.org/privilege/display</privilege>
+        <privilege>http://tizen.org/privilege/mediacontroller.server</privilege>
+        <privilege>http://tizen.org/privilege/packagemanager.info</privilege>
+        <privilege>http://tizen.org/privilege/content.write</privilege>
+        <privilege>http://tizen.org/privilege/callhistory.write</privilege>
+        <privilege>http://tizen.org/privilege/network.get</privilege>
+        <privilege>http://tizen.org/privilege/calendar.read</privilege>
+        <privilege>http://tizen.org/privilege/dpm.debugging</privilege>
+        <privilege>http://tizen.org/privilege/nfc</privilege>
+        <privilege>http://tizen.org/privilege/alarm.set</privilege>
+        <privilege>http://tizen.org/privilege/callhistory.read</privilege>
+        <privilege>http://tizen.org/privilege/externalstorage.appdata</privilege>
+        <privilege>http://tizen.org/privilege/dpm.security</privilege>
+        <privilege>http://tizen.org/privilege/secureelement</privilege>
+        <privilege>http://tizen.org/privilege/dpm.lock</privilege>
+        <privilege>http://tizen.org/privilege/telephony</privilege>
+        <privilege>http://tizen.org/privilege/use_ir</privilege>
+        <privilege>http://tizen.org/privilege/systemmonitor</privilege>
+        <privilege>http://tizen.org/privilege/location</privilege>
+        <privilege>http://tizen.org/privilege/network.set</privilege>
+        <privilege>http://tizen.org/privilege/account.write</privilege>
+        <privilege>http://tizen.org/privilege/dpm.zone</privilege>
+        <privilege>http://tizen.org/privilege/dpm.location</privilege>
+        <privilege>http://tizen.org/privilege/externalstorage</privilege>
+        <privilege>http://tizen.org/privilege/appmanager.kill.bgapp</privilege>
+        <privilege>http://tizen.org/privilege/dpm.message</privilege>
+        <privilege>http://tizen.org/privilege/dpm.usb</privilege>
+        <privilege>http://tizen.org/privilege/volume.set</privilege>
+        <privilege>http://tizen.org/privilege/led</privilege>
+        <privilege>http://tizen.org/privilege/notification</privilege>
+    </privileges>
+    <feature name="http://tizen.org/feature/location.gps">true</feature>
+    <feature name="http://tizen.org/feature/network.wifi">true</feature>
+    <feature name="http://tizen.org/feature/input.rotating_bezel">true</feature>
+    <feature name="http://tizen.org/feature/screen.size.normal.360.480">true</feature>
+</manifest>
