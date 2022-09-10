@@ -1,9 +1,0 @@
-# ninja log v5
-1	5377	0	src/basicuij.o	a25dafd2050c48c3
-5384	8683	0	basicuij	7f82f2846ef4ce46
-0	88	0	clean_cov	b3de405e02eb7ca8
-88	124	0	clean_sa	46ab9549445ac981
-124	136	0	clean	d59b6dac04fa9b5d
-1	30	0	clean_cov	b3de405e02eb7ca8
-30	55	0	clean_sa	46ab9549445ac981
-55	66	0	clean	d59b6dac04fa9b5d
