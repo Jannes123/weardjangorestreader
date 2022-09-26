@@ -2,12 +2,11 @@
 #include "wifi.h"
 
 
-void clicked_back_cb(void *data, Evas_Object *ojb, void *event_info);
-
 typedef struct appdata {
 	Evas_Object *win;
 	Evas_Object *conform;
 	Evas_Object *label;
+	Evas_Object *dynamic_label;
 	Evas_Object *boxybeat;
 	Evas_Object *secondlabel;
 	Evas_Object *naviframe;
@@ -27,15 +26,24 @@ win_back_cb(void *data, Evas_Object *obj, void *event_info)
 	elm_win_lower(ad->win);
 }
 
+
+/*
+ * callback for button press.  GO!
+ * */
 void clicked_cb(void *data, Evas_Object *obj, void *event_info){
 	appdata_s *ad = data;
+
+	/* Box */
 	Evas_Object *bg_box = elm_box_add(ad->naviframe);
-	Evas_Object *bg = elm_bg_add(bg_box);
-	elm_bg_color_set(bg, 66, 162, 209);
-	evas_object_size_hint_weight_set(bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(bg, EVAS_HINT_FILL, 0.5);
-	elm_object_text_set(bg_box,"text inside box raw method.........multiline??");
-	elm_box_pack_end(bg_box, bg);
+	ad->dynamic_label = elm_label_add(bg_box);
+	evas_object_size_hint_weight_set(ad->dynamic_label, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(ad->dynamic_label, EVAS_HINT_FILL, 0.5);
+	elm_object_text_set(ad->dynamic_label, "<align=center> Box 2 <br/> curl results from callback <br/> before timeout.<br/>--no data--</align>");
+	elm_label_line_wrap_set(ad->dynamic_label, ELM_WRAP_WORD);
+	elm_label_slide_go(ad->dynamic_label);
+	elm_box_pack_end(bg_box, ad->dynamic_label);
+	evas_object_show(ad->dynamic_label);
+	evas_object_show(bg_box);
 
 	/* Back Button */
 	Evas_Object *bg_back_button = elm_button_add(bg_box);
@@ -63,17 +71,32 @@ void clicked_cb(void *data, Evas_Object *obj, void *event_info){
 	evas_object_smart_callback_add(back_button, "clicked", clicked_back_cb, ad);
 	elm_box_pack_end(box, back_button);
 	evas_object_show(back_button);
+
+	/* Show Button */
+	Evas_Object *show_button = elm_button_add(box);
+	evas_object_size_hint_weight_set(show_button, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+	evas_object_size_hint_align_set(show_button, EVAS_HINT_FILL, 1);
+	elm_object_text_set(show_button, "SHOW!");
+	evas_object_smart_callback_add(show_button, "clicked", clicked_threads_show, ad);
+	elm_box_pack_end(box, show_button);
+	evas_object_show(show_button);
 }
 
 void clicked_back_cb(void *data, Evas_Object *ojb, void *event_info){
-	//change background and pop frame, exposing previous page
+	//pop frame, exposing previous page
 	appdata_s *ad = data;
-	//Evas_Object *bg = elm_bg_add(ad->naviframe);
-	//elm_bg_color_set(bg, 125, 120,180);
 	elm_naviframe_item_pop(ad->naviframe);
-	//elm_naviframe_item_pop(ad->naviframe);
-	//evas_object_show(ad->boxybeat);
-	//evas_object_show(ad->win);
+}
+
+void clicked_threads_show(void *data, Evas_Object *obj, void *event_info){
+	appdata_s *ad = data;
+	char ui_message_str[65] = "<align=center> Box 2<br/>max threads = ";
+	char jmax_threads[sizeof(int)] = "";
+	snprintf(jmax_threads, sizeof jmax_threads, "%d", ecore_thread_max_get());
+	dlog_print(DLOG_INFO, "USR_TAG", "max threads =  %s", jmax_threads);
+	strcat(ui_message_str, jmax_threads);
+	strcat(ui_message_str, "</align>");
+	elm_object_text_set(ad->dynamic_label, ui_message_str);
 }
 
 static void
@@ -124,7 +147,7 @@ create_base_gui(appdata_s *ad)
 	Evas_Object *label = elm_label_add(ad->boxybeat);
 	evas_object_size_hint_weight_set(label, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(label, EVAS_HINT_FILL, 0.5);
-	elm_object_text_set(label, "<align=center>AOFHTI1GN6RFB5E<align>");
+	elm_object_text_set(label, "<align=center>AOFHTI1GN6RFB5E</align>");
 	elm_box_pack_end(ad->boxybeat, label);
 	evas_object_show(label);
 
@@ -133,7 +156,7 @@ create_base_gui(appdata_s *ad)
 	Evas_Object *secondlabel = elm_label_add(ad->boxybeat);
 	evas_object_size_hint_weight_set(secondlabel, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 	evas_object_size_hint_align_set(secondlabel, EVAS_HINT_FILL, 0.5);
-	elm_object_text_set(secondlabel, "<align=center>MORE INFO!!<align>");
+	elm_object_text_set(secondlabel, "<align=center>BOX 1</align>");
 	elm_box_pack_end(ad->boxybeat, secondlabel);
 	evas_object_show(secondlabel);
 
@@ -222,6 +245,8 @@ static void
 ui_app_low_memory(app_event_info_h event_info, void *user_data)
 {
 	/*APP_EVENT_LOW_MEMORY*/
+	int jmax_threads = ecore_thread_max_get();
+	dlog_print(DLOG_INFO, "USR_TAG", "LOW MEM : max threads =  %d", jmax_threads);
 }
 
 int

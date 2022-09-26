@@ -9,7 +9,7 @@
         <icon>J.png</icon>
         <metadata key="laptop_dev" value="true"/>
         <splash-screens>
-            <splash-screen app-control-operation="" dpi="mdpi" indicator-display="true" orientation="landscape" src="basicuij.png" type="img"/>
+            <splash-screen app-control-operation="" dpi="mdpi" indicator-display="false" orientation="landscape" src="basicuij.png" type="img"/>
         </splash-screens>
     </ui-application>
     <privileges>
@@ -91,8 +91,14 @@
         <privilege>http://tizen.org/privilege/led</privilege>
         <privilege>http://tizen.org/privilege/notification</privilege>
     </privileges>
+    <feature name="http://tizen.org/feature/network.bluetooth">true</feature>
+    <feature name="http://tizen.org/feature/network.internet">true</feature>
     <feature name="http://tizen.org/feature/location.gps">true</feature>
+    <feature name="http://tizen.org/feature/network.wifi.tdls">true</feature>
     <feature name="http://tizen.org/feature/network.wifi">true</feature>
+    <feature name="http://tizen.org/feature/network.telephony">true</feature>
     <feature name="http://tizen.org/feature/input.rotating_bezel">true</feature>
+    <feature name="http://tizen.org/feature/network.service_discovery.dnssd">true</feature>
     <feature name="http://tizen.org/feature/screen.size.normal.360.480">true</feature>
+    <feature name="http://tizen.org/feature/network.push">true</feature>
 </manifest>
