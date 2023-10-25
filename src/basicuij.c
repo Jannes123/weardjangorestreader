@@ -1,6 +1,6 @@
 #include "basicuij.h"
-#include "wifi.h"
-
+#include <curl/curl.h>
+#include <net_connection.h>
 
 typedef struct appdata {
 	Evas_Object *win;
@@ -11,6 +11,8 @@ typedef struct appdata {
 	Evas_Object *secondlabel;
 	Evas_Object *naviframe;
 } appdata_s;
+
+//typedef CURLsslset cset;
 
 static void
 win_delete_request_cb(void *data, Evas_Object *obj, void *event_info)
@@ -97,10 +99,50 @@ void clicked_threads_show(void *data, Evas_Object *obj, void *event_info){
 	strcat(ui_message_str, jmax_threads);
 	strcat(ui_message_str, "</align>");
 	elm_object_text_set(ad->dynamic_label, ui_message_str);
+
+	CURL *curl;
+	CURLcode res;
+	//cset global_curl_settings = curl_global_sslset(CURLSSLBACKEND_OPENSSL, NULL, NULL);
+	curl = curl_easy_init();
+	if (curl == NULL) {
+		dlog_print(DLOG_ERROR, LOG_TAG, "curl no init.");
+	    }
+	connection_h connection;
+	int conn_err;
+	conn_err = connection_create(&connection);
+	if (conn_err != CONNECTION_ERROR_NONE) {
+	    /* Error handling */
+		dlog_print(DLOG_ERROR, LOG_TAG, "connection error on create ");
+	    return;
+	}
+
+	else{
+		struct curl_slist *headers = NULL;
+		curl_slist_append(headers, "Accept: application/json");
+		curl_slist_append(headers, "Content-Type: application/json");
+		curl_slist_append(headers, "charset: utf-8");
+		curl_easy_setopt(curl, CURLOPT_URL, "http://192.168.1.105:8000/data_tags_list/");
+		//curl_easy_setopt(curl, CURLOPT_URL, "http://192.168.1.105:8000/data_tags_list/");
+		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "GET");
+		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+		curl_easy_setopt(curl, CURLOPT_USERAGENT, "libcrp/0.1");
+		res = curl_easy_perform(curl);
+		if (res != CURLE_OK){
+			dlog_print(DLOG_ERROR, LOG_TAG, "curl perform:  %d", res);
+			dlog_print(DLOG_ERROR, LOG_TAG, "NOT OK reply:  %d", res);
+		}
+		else{
+
+			dlog_print(DLOG_ERROR, LOG_TAG, "OK reply:  %d", res);
+		}
+	}
+	curl_easy_cleanup(curl);
+	connection_unset_proxy_address_changed_cb(connection);
+	connection_destroy(connection);
+
 }
 
-static void
-create_base_gui(appdata_s *ad)
+static void create_base_gui(appdata_s *ad)
 {
 	/* Window */
 	/* Create and initialize elm_win.
@@ -155,7 +197,7 @@ create_base_gui(appdata_s *ad)
 
 	Evas_Object *secondlabel = elm_label_add(ad->boxybeat);
 	evas_object_size_hint_weight_set(secondlabel, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-	evas_object_size_hint_align_set(secondlabel, EVAS_HINT_FILL, 0.5);
+	evas_object_size_hint_align_set(secondlabel, EVAS_HINT_FILL, 0.8);
 	elm_object_text_set(secondlabel, "<align=center>BOX 1</align>");
 	elm_box_pack_end(ad->boxybeat, secondlabel);
 	evas_object_show(secondlabel);
@@ -249,8 +291,7 @@ ui_app_low_memory(app_event_info_h event_info, void *user_data)
 	dlog_print(DLOG_INFO, "USR_TAG", "LOW MEM : max threads =  %d", jmax_threads);
 }
 
-int
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	appdata_s ad = {0,};//evas objects
 	int ret = 0;
