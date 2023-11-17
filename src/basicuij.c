@@ -94,6 +94,9 @@ void clicked_threads_show(void *data, Evas_Object *obj, void *event_info){
 	appdata_s *ad = data;
 	char ui_message_str[65] = "<align=center> Box 2<br/>max threads = ";
 	char jmax_threads[sizeof(int)] = "";
+
+	 payload_in[] = NULL;
+
 	snprintf(jmax_threads, sizeof jmax_threads, "%d", ecore_thread_max_get());
 	dlog_print(DLOG_INFO, "USR_TAG", "max threads =  %s", jmax_threads);
 	strcat(ui_message_str, jmax_threads);
@@ -107,6 +110,9 @@ void clicked_threads_show(void *data, Evas_Object *obj, void *event_info){
 	if (curl == NULL) {
 		dlog_print(DLOG_ERROR, LOG_TAG, "curl no init.");
 	    }
+	else{
+		dlog_print(DLOG_ERROR, LOG_TAG, " :-) curl init.");
+		}
 	connection_h connection;
 	int conn_err;
 	conn_err = connection_create(&connection);
@@ -120,20 +126,27 @@ void clicked_threads_show(void *data, Evas_Object *obj, void *event_info){
 		struct curl_slist *headers = NULL;
 		curl_slist_append(headers, "Accept: application/json");
 		curl_slist_append(headers, "Content-Type: application/json");
+		curl_slist_append(headers,"Authorization: Token a51355950ef0528b5b199f9e97b5c41e32e77124");
 		curl_slist_append(headers, "charset: utf-8");
-		curl_easy_setopt(curl, CURLOPT_URL, "http://192.168.1.105:8000/data_tags_list/");
-		//curl_easy_setopt(curl, CURLOPT_URL, "http://192.168.1.105:8000/data_tags_list/");
+		curl_easy_setopt(curl, CURLOPT_URL, "192.168.165.71:8000/rest-auth/tryfirst/");
 		curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "GET");
 		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 		curl_easy_setopt(curl, CURLOPT_USERAGENT, "libcrp/0.1");
+		curl_easy_setopt(curl, CURLOPT_USERNAME, "jannes");
+		curl_easy_setopt(curl, CURLOPT_PASSWORD, "Dolby007xx#");
 		res = curl_easy_perform(curl);
 		if (res != CURLE_OK){
-			dlog_print(DLOG_ERROR, LOG_TAG, "curl perform:  %d", res);
-			dlog_print(DLOG_ERROR, LOG_TAG, "NOT OK reply:  %d", res);
+			dlog_print(DLOG_INFO, LOG_TAG, "curl perform:  %d", res);
+			dlog_print(DLOG_INFO, LOG_TAG, "NOT OK reply:  %d", res);
 		}
 		else{
+			dlog_print(DLOG_INFO, LOG_TAG, "OK reply:  %d doing easy get_info", res);
+			// easy_in = easy_get_info(curl,... );
+			bundle* payload_in_data_bundle = NULL;
+			payload_in_data_bundle = bundle_create();
 
-			dlog_print(DLOG_ERROR, LOG_TAG, "OK reply:  %d", res);
+			curl_easy_recv(curl, p_t_receive_buffer, 128, payload_in_data_bundle);
+			// when done bundle_free(payload_in_data_bundle);
 		}
 	}
 	curl_easy_cleanup(curl);
